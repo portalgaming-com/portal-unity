@@ -47,6 +47,46 @@ namespace Portal.Identity.Event
 
         #endregion
 
+
+        #region PKCE
+
+        /// <summary>
+        /// Started the login process using PKCE flow
+        /// </summary>
+        LoggingInPKCE,
+        /// <summary>
+        /// Launching Identity login in Chrome Custom Tabs for login via PKCE flow
+        /// </summary>
+        LoginPKCELaunchingCustomTabs,
+        /// <summary>
+        /// Opening Identity login in a webview (ASWebAuthenticationSession) for login via PKCE flow
+        /// </summary>
+        LoginPKCEOpeningWebView,
+        /// <summary>
+        /// Failed to log in using PKCE flow
+        /// </summary>
+        LoginPKCEFailed,
+        /// <summary>
+        /// Successfully logged in using PKCE flow
+        /// </summary>
+        LoginPKCESuccess,
+
+
+        /// <summary>
+        /// Started the log out process using Chrome Custom Tabs/ASWebAuthenticationSession
+        /// </summary>
+        LoggingOutPKCE,
+        /// <summary>
+        /// Failed to log out using Chrome Custom Tabs/ASWebAuthenticationSession
+        /// </summary>
+        LogoutPKCEFailed,
+        /// <summary>
+        /// Successfully logged out using Chrome Custom Tabs/ASWebAuthenticationSession
+        /// </summary>
+        LogoutPKCESuccess,
+
+        #endregion
+
         #region Using saved credentials
         /// <summary>
         /// Started the re-login process using saved credentials
@@ -55,11 +95,11 @@ namespace Portal.Identity.Event
         /// <summary>
         /// Failed to re-login using saved credentials
         /// </summary>
-        ReloginFailed,
+        ReauthenticateFailed,
         /// <summary>
         /// Successfully re-logged in using saved credentials
         /// </summary>
-        ReloginSuccess,
+        ReauthenticateSuccess,
 
         /// <summary>
         /// Started the reconnect process using saved credentials

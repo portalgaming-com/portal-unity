@@ -1,0 +1,28 @@
+{
+    "name": "Portal.Identity.Runtime.Public",
+    "rootNamespace": "Portal.Identity",
+    "references": [
+        "VoltstroStudios.UnityWebBrowser",
+        "UniTask",
+        "Portal.Browser.Core",
+        "unity-webview",
+        "Portal.Identity.Runtime.Private"
+    ],
+    "includePlatforms": [
+        "Android",
+        "Editor",
+        "iOS",
+        "macOSStandalone",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

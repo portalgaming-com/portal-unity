@@ -96,12 +96,12 @@ namespace Portal.Identity
 
         }
 
-        public async UniTask<bool> Login(bool useCachedSession = false, Nullable<long> timeoutMs = null)
+        public async UniTask<bool> Authenticate(bool useCachedSession = false, Nullable<long> timeoutMs = null)
         {
-            string functionName = "Login";
+            string functionName = "Authenticate";
             if (useCachedSession)
             {
-                return await Relogin();
+                return await Reauthenticate();
             }
             else
             {
@@ -109,10 +109,10 @@ namespace Portal.Identity
                 {
                     SendAuthEvent(IdentityAuthEvent.LoggingIn);
 
-                    await InitialiseDeviceCodeAuth(functionName);
+                    await InitializeDeviceCodeAuth(functionName);
                     await ConfirmCode(
                         IdentityAuthEvent.LoginOpeningBrowser, IdentityAuthEvent.PendingBrowserLogin, functionName,
-                        IdentityFunction.LOGIN_CONFIRM_CODE, timeoutMs);
+                        IdentityFunction.AUTHENTICATE_CONFIRM_CODE, timeoutMs);
 
 
                     SendAuthEvent(IdentityAuthEvent.LoginSuccess);
@@ -128,16 +128,16 @@ namespace Portal.Identity
             }
         }
 
-        private async UniTask<bool> Relogin()
+        private async UniTask<bool> Reauthenticate()
         {
             try
             {
                 SendAuthEvent(IdentityAuthEvent.ReloggingIn);
 
-                string callResponse = await communicationsManager.Call(IdentityFunction.RELOGIN);
+                string callResponse = await communicationsManager.Call(IdentityFunction.REAUTHENTICATE);
                 bool success = callResponse.GetBoolResponse() ?? false;
 
-                SendAuthEvent(success ? IdentityAuthEvent.ReloginSuccess : IdentityAuthEvent.ReloginFailed);
+                SendAuthEvent(success ? IdentityAuthEvent.ReauthenticateSuccess : IdentityAuthEvent.ReauthenticateFailed);
                 isLoggedIn = success;
                 return success;
             }
@@ -145,7 +145,7 @@ namespace Portal.Identity
             {
                 Debug.Log($"{TAG} Failed to login to Identity using saved credentials: {ex.Message}");
             }
-            SendAuthEvent(IdentityAuthEvent.ReloginFailed);
+            SendAuthEvent(IdentityAuthEvent.ReauthenticateFailed);
             return false;
         }
 

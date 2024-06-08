@@ -7,6 +7,7 @@ using Portal.Browser.Gree;
 #endif
 using Portal.Identity.Event;
 using Portal.Browser.Core;
+using Portal.Identity.Model;
 using Portal.Identity.Core;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -51,7 +52,7 @@ namespace Portal.Identity
         /// Initializes Identity
         /// </summary>
         /// <param name="clientId">The client ID</param>
-        /// <param name="redirectUri">(Android, iOS and macOS only) The URL to which auth will redirect the browser after authorisation has been granted by the user</param>
+        /// <param name="redirectUri">(Android, iOS and macOS only) The URL to which auth will redirect the browser after authorization has been granted by the user</param>
         /// <param name="logoutRedirectUri">(Android, iOS and macOS only) The URL to which auth will redirect the browser after log out is complete</param>
         /// <param name="engineStartupTimeoutMs">(Windows only) Timeout time for waiting for the engine to start (in milliseconds)</param>
         public static UniTask<Identity> Init(
@@ -64,7 +65,7 @@ namespace Portal.Identity
         {
             if (Instance == null)
             {
-                Debug.Log($"{TAG} Initialising Identity...");
+                Debug.Log($"{TAG} Initializing Identity...");
                 Instance = new Identity();
                 // Wait until we get a ready signal
                 return Instance.Initialize(
@@ -81,13 +82,13 @@ namespace Portal.Identity
                     {
                         if (readySignalReceived == true)
                         {
-                            await Instance.GetIdentityImpl().Init(clientId, environment, redirectUri, logoutRedirectUri, deeplink);
+                            await Instance.GetIdentityImpl().Init(clientId, redirectUri, logoutRedirectUri, deeplink);
                             return Instance;
                         }
                         else
                         {
-                            Debug.Log($"{TAG} Failed to initialise Identity");
-                            throw new IdentityException("Failed to initiliase Identity", IdentityErrorType.INITALISATION_ERROR);
+                            Debug.Log($"{TAG} Failed to initialize Identity");
+                            throw new IdentityException("Failed to initialize Identity", IdentityErrorType.INITIALIZATION_ERROR);
                         }
                     });
             }
@@ -146,9 +147,9 @@ namespace Portal.Identity
         /// Logs the user into Identity via device code auth. This will open the user's default browser and take them through Identity login.
         /// <param name="useCachedSession">If true, the saved access token or refresh token will be used to log the user in. If this fails, it will not fallback to device code auth.</param>
         /// </summary>
-        public async UniTask<bool> Login(bool useCachedSession = false, Nullable<long> timeoutMs = null)
+        public async UniTask<bool> Authenticate(bool useCachedSession = false, Nullable<long> timeoutMs = null)
         {
-            return await GetIdentityImpl().Login(useCachedSession, timeoutMs);
+            return await GetIdentityImpl().Authenticate(useCachedSession, timeoutMs);
         }
 
 
@@ -169,6 +170,16 @@ namespace Portal.Identity
         public async UniTask Logout(bool hardLogout = true)
         {
             await GetIdentityImpl().Logout(hardLogout);
+        }
+
+        /// <summary>
+        /// Logs the user out of Identity and removes any stored credentials.
+        /// Recommended to use when logging in using PKCE flow
+        /// </summary>
+        /// <param name="hardLogout">If false, the user will not be logged out of Identity in the browser. The default is true.</param>
+        public async UniTask LogoutPKCE(bool hardLogout = true)
+        {
+            await GetIdentityImpl().LogoutPKCE(hardLogout);
         }
 
         /// <summary>
@@ -233,7 +244,7 @@ namespace Portal.Identity
             {
                 return identityImpl;
             }
-            throw new IdentityException("Identity not initialised");
+            throw new IdentityException("Identity not initialized");
         }
 
         private void OnDeepLinkActivated(string url)

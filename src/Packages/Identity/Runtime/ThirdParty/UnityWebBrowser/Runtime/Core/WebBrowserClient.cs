@@ -66,7 +66,7 @@ namespace VoltstroStudios.UnityWebBrowser.Core
         private const string ENGINE_APP_NAME = "UnityWebBrowser.Engine.Cef";
         public static string ENGINE_FILE_LOCATION = "Packages/com.portal.identity/Runtime/ThirdParty/UnityWebBrowser.Engine.Cef.Win-x64/Engine/";
         private const string IDENTITY_PACKAGE_RESOURCES_DIRECTORY = "Packages/com.portal.identity/Runtime/Resources";
-        private const string INITIAL_URL = "https://www.portal.com/";
+        private const string INITIAL_URL = "https://www.portalgaming.com/";
 
         /// <summary>
         ///     The initial URl the browser will start at

@@ -8,6 +8,7 @@ using VoltstroStudios.UnityWebBrowser.Core;
 using Portal.Browser.Gree;
 #endif
 using Portal.Browser.Core;
+using Portal.Identity.Model;
 using UnityEngine;
 using UnityEngine.Scripting;
 using Portal.Identity.Helpers;
@@ -150,7 +151,7 @@ namespace Portal.Identity.Core
             Debug.Log($"{TAG} HandleResponse message: " + message);
             BrowserResponse response = message.OptDeserializeObject<BrowserResponse>();
 
-            // Check if the reponse returned is valid and the task to return the reponse exists
+            // Check if the response returned is valid and the task to return the response exists
             if (response == null || String.IsNullOrEmpty(response.responseFor) || String.IsNullOrEmpty(response.requestId))
             {
                 throw new IdentityException($"Response from browser is incorrect. Check HTML/JS files.");
