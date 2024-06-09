@@ -7,7 +7,6 @@ namespace Portal.Identity.Model
     internal class InitRequestWithRedirectUri
     {
         public string clientId;
-        public string environment;
         public string redirectUri;
         public string logoutRedirectUri;
     }
@@ -16,7 +15,6 @@ namespace Portal.Identity.Model
     internal class InitRequest
     {
         public string clientId;
-        public string environment;
 
     }
 }

@@ -4,22 +4,22 @@ namespace Portal.Identity.Event
 
     public enum IdentityAuthEvent
     {
-        #region Device Code Authorization
+        #region Device Code Authorisation
 
         /// <summary>
-        /// Started the login process using Device Code Authorization flow
+        /// Started the login process using Device Code Authorisation flow
         /// </summary>
         LoggingIn,
         /// <summary>
-        /// Failed to log in using Device Code Authorization flow
+        /// Failed to log in using Device Code Authorisation flow
         /// </summary>
         LoginFailed,
         /// <summary>
-        /// Successfully logged in using Device Code Authorization flow
+        /// Successfully logged in using Device Code Authorisation flow
         /// </summary>
         LoginSuccess,
         /// <summary>
-        /// Opening Identity login in an external browser for login via Device Code Authorization flow
+        /// Opening Identity login in an external browser for login via Device Code Authorisation flow
         /// </summary>
         LoginOpeningBrowser,
         /// <summary>
@@ -47,7 +47,6 @@ namespace Portal.Identity.Event
 
         #endregion
 
-
         #region PKCE
 
         /// <summary>
@@ -70,6 +69,11 @@ namespace Portal.Identity.Event
         /// Successfully logged in using PKCE flow
         /// </summary>
         LoginPKCESuccess,
+        /// <summary>
+        /// Chrome Custom Tabs/Webview redirected the user back to the game via deeplink 
+        /// and is now trying to complete the PKCE login process
+        /// </summary>
+        CompletingLoginPKCE,
 
 
         /// <summary>
@@ -95,11 +99,11 @@ namespace Portal.Identity.Event
         /// <summary>
         /// Failed to re-login using saved credentials
         /// </summary>
-        ReauthenticateFailed,
+        ReloginFailed,
         /// <summary>
         /// Successfully re-logged in using saved credentials
         /// </summary>
-        ReauthenticateSuccess,
+        ReloginSuccess,
 
         /// <summary>
         /// Started the reconnect process using saved credentials

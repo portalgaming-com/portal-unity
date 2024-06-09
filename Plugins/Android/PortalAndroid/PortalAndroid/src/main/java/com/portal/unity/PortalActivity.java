@@ -60,12 +60,9 @@ public class PortalActivity extends Activity {
     protected void onResume() {
         super.onResume();
         Uri uri = getUri();
-        // Determine whether user returned to this activity from a redirect or because
-        // the user cancelled
-        // the auth flow. If there is no response data (from RedirectActivity), it's
-        // because the
-        // user dismissed custom tabs, pressed the back button, or the auth flow
-        // finished without invoking
+        // Determine whether user returned to this activity from a redirect or because the user cancelled
+        // the auth flow. If there is no response data (from RedirectActivity), it's because the
+        // user dismissed custom tabs, pressed the back button, or the auth flow finished without invoking
         // RedirectActivity.
         if (customTabsLaunched && uri != null && getIntent().getData() == null && callbackInstance != null) {
             // User cancelled auth flow
@@ -129,7 +126,7 @@ public class PortalActivity extends Activity {
 
     public interface Callback {
         void onCustomTabsDismissed(String url);
-
         void onDeeplinkResult(String url);
     }
 }
+

@@ -26,7 +26,7 @@ namespace Portal.Identity.Core
     public static class BrowserResponseExtensions
     {
         /// <summary>
-        /// Deserializes the json to StringResponse and returns the result
+        /// Deserialises the json to StringResponse and returns the result
         /// See <see cref="Portal.Identity.Core.BrowserResponse.StringResponse"></param>
         /// </summary>
         public static string GetStringResult(this string json)
@@ -43,7 +43,7 @@ namespace Portal.Identity.Core
         }
 
         /// <summary>
-        /// Deserializes the json to BoolResponse and returns the result
+        /// Deserialises the json to BoolResponse and returns the result
         /// See <see cref="Portal.Identity.Core.BrowserResponse.BoolResponse"></param>
         /// </summary>
         public static Nullable<bool> GetBoolResponse(this string json)

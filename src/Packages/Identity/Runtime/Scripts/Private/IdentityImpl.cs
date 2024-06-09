@@ -42,21 +42,13 @@ namespace Portal.Identity
             this.communicationsManager = communicationsManager;
         }
 
-        public async UniTask Init(string clientId, string environment, string redirectUri = null, string logoutRedirectUri = null, string deeplink = null)
+        public async UniTask Init(string clientId, string redirectUri = null, string logoutRedirectUri = null, string deeplink = null)
         {
             this.redirectUri = redirectUri;
             this.logoutRedirectUri = logoutRedirectUri;
             this.communicationsManager.OnAuthPostMessage += OnDeepLinkActivated;
             this.communicationsManager.OnPostMessageError += OnPostMessageError;
 
-            var versionInfo = new VersionInfo
-            {
-                engine = "unity",
-                engineVersion = Application.unityVersion,
-                platform = Application.platform.ToString(),
-                platformVersion = SystemInfo.operatingSystem,
-                deviceModel = SystemInfo.deviceModel
-            };
 
             string initRequest;
             if (redirectUri != null && logoutRedirectUri != null)
@@ -64,10 +56,8 @@ namespace Portal.Identity
                 InitRequestWithRedirectUri requestWithRedirectUri = new InitRequestWithRedirectUri()
                 {
                     clientId = clientId,
-                    environment = environment,
                     redirectUri = redirectUri,
                     logoutRedirectUri = logoutRedirectUri,
-                    engineVersion = versionInfo
                 };
                 initRequest = JsonUtility.ToJson(requestWithRedirectUri);
             }
@@ -76,8 +66,6 @@ namespace Portal.Identity
                 InitRequest request = new InitRequest()
                 {
                     clientId = clientId,
-                    environment = environment,
-                    engineVersion = versionInfo
                 };
                 initRequest = JsonUtility.ToJson(request);
             }
@@ -137,7 +125,7 @@ namespace Portal.Identity
                 string callResponse = await communicationsManager.Call(IdentityFunction.REAUTHENTICATE);
                 bool success = callResponse.GetBoolResponse() ?? false;
 
-                SendAuthEvent(success ? IdentityAuthEvent.ReauthenticateSuccess : IdentityAuthEvent.ReauthenticateFailed);
+                SendAuthEvent(success ? IdentityAuthEvent.ReloginSuccess : IdentityAuthEvent.ReloginFailed);
                 isLoggedIn = success;
                 return success;
             }
@@ -145,27 +133,7 @@ namespace Portal.Identity
             {
                 Debug.Log($"{TAG} Failed to login to Identity using saved credentials: {ex.Message}");
             }
-            SendAuthEvent(IdentityAuthEvent.ReauthenticateFailed);
-            return false;
-        }
-
-        private async UniTask<bool> Reconnect()
-        {
-            try
-            {
-                SendAuthEvent(IdentityAuthEvent.Reconnecting);
-                string callResponse = await communicationsManager.Call(IdentityFunction.RECONNECT);
-                bool success = callResponse.GetBoolResponse() ?? false;
-
-                SendAuthEvent(success ? IdentityAuthEvent.ReconnectSuccess : IdentityAuthEvent.ReconnectFailed);
-                isLoggedIn = success;
-                return success;
-            }
-            catch (Exception ex)
-            {
-                Debug.Log($"{TAG} Failed to connect to Identity using saved credentials: {ex.Message}");
-            }
-            SendAuthEvent(IdentityAuthEvent.ReconnectFailed);
+            SendAuthEvent(IdentityAuthEvent.ReloginFailed);
             return false;
         }
 
@@ -616,7 +584,7 @@ namespace Portal.Identity
             AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
             AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
             AndroidJavaClass customTabLauncher = new AndroidJavaClass("com.portal.unity.PortalActivity");
-            customTabLauncher.CallStatic("startActivity", activity, url, new AndroidPKCECallback(this));
+            customTabLauncher.CallStatic("startActivity", activity, url, new AndroidPKCECallback((PKCECallback)this));
         }
 #endif
 

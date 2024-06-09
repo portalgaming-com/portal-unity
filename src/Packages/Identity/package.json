@@ -1,12 +1,8 @@
 {
   "name": "com.portal.identity",
   "version": "0.0.1",
-  "description": "The Portal SDK for Unity helps you integrate your game with Portal ID.",
-  "displayName": "Portal ID",
-  "author": {
-    "name": "Openfort",
-    "url": "https://openfort.xyz"
-  },
+  "description": "The Portal SDK for Unity helps you integrate your game with Portal Identity.",
+  "displayName": "Portal Identity",
   "scopedRegistries": [
     {
       "name": "Open UPM Packages",
@@ -23,7 +19,7 @@
   "keywords": [
     "unity",
     "portal",
-    "id"
+    "identity"
   ],
   "unity": "2021.3"
 }

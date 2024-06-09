@@ -9,7 +9,7 @@ namespace Portal.Identity.Helpers
     public static class JsonExtensions
     {
         /// <summary>
-        /// Return null if the deserialization fails.
+        /// Return null if the deserialisation fails.
         /// </summary> 
         public static T OptDeserializeObject<T>(this string json) where T : class
         {
@@ -19,14 +19,14 @@ namespace Portal.Identity.Helpers
             }
             catch (Exception e)
             {
-                Debug.Log($"Failed to deserialize {json}: {e.Message}");
+                Debug.Log($"Failed to deserialise {json}: {e.Message}");
                 return null;
             }
         }
 
         public static string ToJson<T>(this T[] array)
         {
-            // Need a wrapper to serialize arrays
+            // Need a wrapper to serialise arrays
             Wrapper<T> wrapper = new Wrapper<T>();
             wrapper.Items = array;
             string wrapped = JsonUtility.ToJson(wrapper);
@@ -56,7 +56,7 @@ namespace Portal.Identity.Helpers
 
         public static string ToJson(this IDictionary<string, object> dictionary)
         {
-            // JsonUtility cannot serialize dictionary, but not using newtonsoft json as it doesn't
+            // JsonUtility cannot serialise dictionary, but not using newtonsoft json as it doesn't
             // work properly with older unity versions so doing it manually
             StringBuilder sb = new StringBuilder("{");
             for (int i = 0; i < dictionary.Count; i++)

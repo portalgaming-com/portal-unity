@@ -151,7 +151,7 @@ namespace Portal.Identity.Core
             Debug.Log($"{TAG} HandleResponse message: " + message);
             BrowserResponse response = message.OptDeserializeObject<BrowserResponse>();
 
-            // Check if the response returned is valid and the task to return the response exists
+            // Check if the reponse returned is valid and the task to return the reponse exists
             if (response == null || String.IsNullOrEmpty(response.responseFor) || String.IsNullOrEmpty(response.requestId))
             {
                 throw new IdentityException($"Response from browser is incorrect. Check HTML/JS files.");
@@ -185,7 +185,7 @@ namespace Portal.Identity.Core
         {
             if (response.success == false || !String.IsNullOrEmpty(response.error))
             {
-                // Failed or error occurred
+                // Failed or error occured
                 try
                 {
                     if (!String.IsNullOrEmpty(response.error) && !String.IsNullOrEmpty(response.errorType))
