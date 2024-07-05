@@ -308,7 +308,7 @@ namespace Portal.Identity
                     };
 
                     string callResponse = await communicationsManager.Call(
-                            IdentityFunction.LOGIN_PKCE,
+                            IdentityFunction.AUTHENTICATE_PKCE,
                             JsonUtility.ToJson(request)
                         );
 
@@ -485,6 +485,18 @@ namespace Portal.Identity
             return response.GetStringResult();
         }
 
+        public async UniTask<string> ExecuteTransaction(TransactionRequest request)
+        {
+            string callRequest = JsonUtility.ToJson(request);
+
+            string response = await communicationsManager.Call(IdentityFunction.EXECUTE_TRANSACTION, callRequest);
+            return response.GetStringResult();
+        }
+
+        public async UniTask RequestWalletSessionKey()
+        {
+            await communicationsManager.Call(IdentityFunction.REQUEST_WALLET_SESSION_KEY);
+        }
 
         public async UniTask<string> GetIdToken()
         {

@@ -215,6 +215,25 @@ namespace Portal.Identity
             return GetIdentityImpl().GetIdToken();
         }
 
+        /// <summary>
+        /// Executes a transaction on the blockchain
+        /// <returns>
+        /// Transaction hash
+        /// </returns>
+        /// </summary>
+        public UniTask<string> ExecuteTransaction(TransactionRequest request)
+        {
+            return GetIdentityImpl().ExecuteTransaction(request);
+        }
+
+        /// <summary>
+        /// Requests a wallet session key
+        /// </summary>
+        public async UniTask RequestWalletSessionKey()
+        {
+            await GetIdentityImpl().RequestWalletSessionKey();
+        }
+
 #if (UNITY_IPHONE && !UNITY_EDITOR) || (UNITY_ANDROID && !UNITY_EDITOR)
         /// <summary>
         /// Clears the underlying WebView resource cache
